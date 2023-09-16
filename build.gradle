@@ -1,0 +1,63 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id 'org.springframework.boot' version '2.7.15'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.6.21'
+    id 'org.jetbrains.kotlin.plugin.jpa' version '1.6.21'
+}
+
+group = 'com.bpmn'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect'
+    runtimeOnly 'org.postgresql:postgresql'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    
+
+    // https://mvnrepository.com/artifact/io.github.microutils/kotlin-logging
+    implementation group: 'io.github.microutils', name: 'kotlin-logging', version: '1.6.22'
+    // https://mvnrepository.com/artifact/org.camunda.bpm.springboot/camunda-bpm-spring-boot-starter-webapp
+    implementation group: 'org.camunda.bpm.springboot', name: 'camunda-bpm-spring-boot-starter-webapp', version: '3.1.1'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
+    implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.6'
+    // https://mvnrepository.com/artifact/org.camunda.bpm.springboot/camunda-bpm-spring-boot-starter-rest
+    implementation group: 'org.camunda.bpm.springboot', name: 'camunda-bpm-spring-boot-starter-rest', version: '7.18.0'
+    // https://mvnrepository.com/artifact/org.camunda.bpm.springboot/camunda-bpm-spring-boot-starter-test
+    testImplementation group: 'org.camunda.bpm.springboot', name: 'camunda-bpm-spring-boot-starter-test', version: '7.14.0'
+    // https://mvnrepository.com/artifact/org.assertj/assertj-core
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '2.6.0'
+    // https://mvnrepository.com/artifact/org.camunda.bpm.assert/camunda-bpm-assert
+    testImplementation group: 'org.camunda.bpm.assert', name: 'camunda-bpm-assert', version: '5.0.0'
+    // https://mvnrepository.com/artifact/org.camunda.spin/camunda-spin-dataformat-json-jackson
+    implementation group: 'org.camunda.spin', name: 'camunda-spin-dataformat-json-jackson', version: '1.7.4'
+    // https://mvnrepository.com/artifact/org.camunda.spin/camunda-spin-core
+    implementation group: 'org.camunda.spin', name: 'camunda-spin-core', version: '1.8.0'
+    // https://mvnrepository.com/artifact/org.camunda.bpm/camunda-engine-plugin-spin
+    implementation group: 'org.camunda.bpm', name: 'camunda-engine-plugin-spin', version: '7.18.0'
+}
+
+tasks.withType(KotlinCompile) {
+    kotlinOptions {
+        freeCompilerArgs += '-Xjsr305=strict'
+        jvmTarget = '17'
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
