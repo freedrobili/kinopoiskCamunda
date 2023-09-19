@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - logicalFilePath: src/main/resources/liquibase/1_0_0/scripts/film_table
+  - changeSet:
+      id: 1.0.0_0
+      author: ykudashkina
+      changes:
+        - createTable:
+            schemaName: kinopoisk
+            tableName: film
+            remarks: Таблица с фильмами
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+              - column:
+                  constraints:
+                    nullable: false
+                  name: title
+                  type: varchar(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: director
+                  type: varchar(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: releaseYear
+                  type: int
+              - column:
+                  constraints:
+                    nullable: false
+                  name: genre
+                  type: varchar(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: rating
+                  type: double

@@ -6,6 +6,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.6.21'
     id 'org.jetbrains.kotlin.plugin.spring' version '1.6.21'
     id 'org.jetbrains.kotlin.plugin.jpa' version '1.6.21'
+    id "org.liquibase.gradle" version "2.2.0"
 }
 
 group = 'com.bpmn'
@@ -27,7 +28,12 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    
+
+
+
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
     // https://mvnrepository.com/artifact/io.github.microutils/kotlin-logging
     implementation group: 'io.github.microutils', name: 'kotlin-logging', version: '1.6.22'
@@ -49,6 +55,29 @@ dependencies {
     implementation group: 'org.camunda.spin', name: 'camunda-spin-core', version: '1.8.0'
     // https://mvnrepository.com/artifact/org.camunda.bpm/camunda-engine-plugin-spin
     implementation group: 'org.camunda.bpm', name: 'camunda-engine-plugin-spin', version: '7.18.0'
+
+    implementation 'org.liquibase:liquibase-core'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin
+    implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.14.2'
+
+    // https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
+    implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+
+
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '4.0.1'
+
+
+
+
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:2021.0.0'
+        }
+    }
+
+
 }
 
 tasks.withType(KotlinCompile) {
