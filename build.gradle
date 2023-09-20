@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id 'org.springframework.boot' version '2.7.15'
+    id 'org.springframework.boot' version '2.6.15'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'org.jetbrains.kotlin.jvm' version '1.6.21'
     id 'org.jetbrains.kotlin.plugin.spring' version '1.6.21'
@@ -31,12 +31,14 @@ dependencies {
 
 
 
+    implementation('org.springframework.cloud:spring-cloud-starter-openfeign:4.0.3')
 
-    implementation 'org.springframework.cloud:spring-cloud-starter-config'
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
     // https://mvnrepository.com/artifact/io.github.microutils/kotlin-logging
     implementation group: 'io.github.microutils', name: 'kotlin-logging', version: '1.6.22'
+
     // https://mvnrepository.com/artifact/org.camunda.bpm.springboot/camunda-bpm-spring-boot-starter-webapp
     implementation group: 'org.camunda.bpm.springboot', name: 'camunda-bpm-spring-boot-starter-webapp', version: '3.1.1'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
@@ -66,7 +68,7 @@ dependencies {
 
 
     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '4.0.1'
+//    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '4.0.1'
 
 
 

@@ -6,11 +6,9 @@ import org.camunda.bpm.engine.delegate.JavaDelegate
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
-@Component
-class DetermineFilmIdDelegate : JavaDelegate{
+@Component("filmDelegate")
+class DetermineFilmIdDelegate(private val filmEnrichmentService: FilmEnrichmentService) : JavaDelegate{
 
-    @Autowired
-    private lateinit var filmEnrichmentService: FilmEnrichmentService
     override fun execute(execution: DelegateExecution) {
         val keyword = execution.getVariable("keyword") as String
 
