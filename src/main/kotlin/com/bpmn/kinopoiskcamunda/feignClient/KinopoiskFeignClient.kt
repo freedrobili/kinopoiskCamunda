@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam
 
 @FeignClient(name = "kinopoiskClient", url = "\${kinopoisk.api.url}")
 interface KinopoiskFeignClient {
-    @GetMapping("/search")
+    @GetMapping("/v2.1/films/search-by-keyword")
     fun searchFilm(@RequestParam keyword: String): List<FilmInfoResponse>
 
     class FeignConfiguration {

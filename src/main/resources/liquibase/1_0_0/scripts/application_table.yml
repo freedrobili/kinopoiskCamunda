@@ -5,7 +5,7 @@ databaseChangeLog:
       author: ykudashkina
       changes:
         - createTable:
-            schemaName: kinopoisk
+            schemaName: camunda
             tableName: application
             remarks: Таблица c заявками
             columns:

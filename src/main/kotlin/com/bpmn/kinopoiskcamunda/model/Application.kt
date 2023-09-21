@@ -1,5 +1,7 @@
 package com.bpmn.kinopoiskcamunda.model
 
+import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -14,9 +16,11 @@ data class Application(
         @Enumerated(EnumType.STRING)
         val status: ApplicationStatus,
 
-        @Column(name = "creation_data")
+        @CreationTimestamp
+        @Column(name = "creation_date")
         val creationData: LocalDateTime,
 
+        @UpdateTimestamp
         @Column(name = "update_date")
         val updateDate: LocalDateTime,
 

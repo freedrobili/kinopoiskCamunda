@@ -5,7 +5,7 @@ databaseChangeLog:
       author: ykudashkina
       changes:
         - createTable:
-            schemaName: kinopoisk
+            schemaName: camunda
             tableName: film
             remarks: Таблица с фильмами
             columns:
