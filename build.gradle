@@ -29,6 +29,8 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly 'org.projectlombok:lombok:1.18.26'
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.21'
 

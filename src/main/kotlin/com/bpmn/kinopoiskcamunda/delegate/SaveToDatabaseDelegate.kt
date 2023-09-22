@@ -10,18 +10,18 @@ class SaveToDatabaseDelegate(private val applicationRepository: ApplicationRepos
 
     override fun execute(execution: DelegateExecution) {
         try {
-            val applicationId = execution.businessKey.toLongOrNull()
+            val applicationId = execution.businessKey.toLong()
 
-            if (applicationId != null) {
+            /*if (applicationId != null) {*/
                 val application = applicationRepository.findById(applicationId)
                 if (application.isPresent) {
                     val keyword = application.get().keyword
                 } else {
                     throw IllegalArgumentException("Application not found with id: $applicationId")
                 }
-            } else {
+             /*} else {
                 throw IllegalArgumentException("Invalid applicationId: ${execution.businessKey}")
-            }
+            }*/
         } catch (ex: Exception) {
             throw ex
         }

@@ -4,7 +4,7 @@
     <bpmn:participant id="Participant_0qx44eh" name="Name" processRef="File_Process" />
   </bpmn:collaboration>
   <bpmn:process id="File_Process" name="File_name" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1">
+    <bpmn:startEvent id="StartEvent_1" camunda:initiator="template">
       <bpmn:outgoing>Flow_0kr5lzt</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:intermediateCatchEvent id="Event_1bvbjgd" name="Уточнить название">
@@ -12,7 +12,7 @@
       <bpmn:outgoing>Flow_0h7veqw</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0oe3yph" messageRef="Message_01dpwhz" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:exclusiveGateway id="Gateway_03get25" name="film_id != null" default="Flow_0z5tj4k">
+    <bpmn:exclusiveGateway id="Gateway_03get25" name="filmId != null" default="Flow_0z5tj4k">
       <bpmn:incoming>Flow_15g74rg</bpmn:incoming>
       <bpmn:outgoing>Flow_0z5tj4k</bpmn:outgoing>
       <bpmn:outgoing>Flow_0lekq9e</bpmn:outgoing>
@@ -20,7 +20,7 @@
     <bpmn:endEvent id="Event_1tb27f1">
       <bpmn:incoming>Flow_0qtmtyq</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_1u3a5eg" name="Определить film_id" camunda:delegateExpression="${filmDelegate}">
+    <bpmn:serviceTask id="Activity_1u3a5eg" name="Определить filmId" camunda:asyncBefore="true" camunda:delegateExpression="${filmDelegate}">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="Input_0kg7q6l" />
@@ -35,10 +35,10 @@
     <bpmn:sequenceFlow id="Flow_0h7veqw" sourceRef="Event_1bvbjgd" targetRef="Activity_1u3a5eg" />
     <bpmn:sequenceFlow id="Flow_0z5tj4k" name="Да" sourceRef="Gateway_03get25" targetRef="Activity_0fo0iyr" />
     <bpmn:sequenceFlow id="Flow_0lekq9e" name="Нет" sourceRef="Gateway_03get25" targetRef="Event_1bvbjgd">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${no}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${filmId != null}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0qtmtyq" sourceRef="Activity_0fo0iyr" targetRef="Event_1tb27f1" />
-    <bpmn:serviceTask id="Activity_0fo0iyr" name="Сохранить в бд" camunda:delegateExpression="${saveDelegate}">
+    <bpmn:serviceTask id="Activity_0fo0iyr" name="Сохранить в бд" camunda:asyncBefore="true" camunda:delegateExpression="${saveDelegate}">
       <bpmn:incoming>Flow_0z5tj4k</bpmn:incoming>
       <bpmn:outgoing>Flow_0qtmtyq</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -96,7 +96,7 @@
       <bpmndi:BPMNShape id="Gateway_03get25_di" bpmnElement="Gateway_03get25" isMarkerVisible="true">
         <dc:Bounds x="475" y="242" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="468" y="299" width="65" height="14" />
+          <dc:Bounds x="473" y="299" width="59" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1tb27f1_di" bpmnElement="Event_1tb27f1">
