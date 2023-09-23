@@ -35,7 +35,7 @@
     <bpmn:sequenceFlow id="Flow_0h7veqw" sourceRef="Event_1bvbjgd" targetRef="Activity_1u3a5eg" />
     <bpmn:sequenceFlow id="Flow_0z5tj4k" name="Да" sourceRef="Gateway_03get25" targetRef="Activity_0fo0iyr" />
     <bpmn:sequenceFlow id="Flow_0lekq9e" name="Нет" sourceRef="Gateway_03get25" targetRef="Event_1bvbjgd">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${filmId != null}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${filmId == null}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0qtmtyq" sourceRef="Activity_0fo0iyr" targetRef="Event_1tb27f1" />
     <bpmn:serviceTask id="Activity_0fo0iyr" name="Сохранить в бд" camunda:asyncBefore="true" camunda:delegateExpression="${saveDelegate}">

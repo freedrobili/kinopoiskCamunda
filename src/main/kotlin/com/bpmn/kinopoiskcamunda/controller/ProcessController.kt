@@ -88,7 +88,7 @@ class ProcessController(
 
                 applicationRepository.save(existingApplication)
 
-                // Находим процесс по businessKey
+                //процесс по businessKey
                 val processInstance = runtimeService.createProcessInstanceQuery()
                         .processInstanceBusinessKey(applicationId.toString())
                         .singleResult()
@@ -96,7 +96,7 @@ class ProcessController(
                 if (processInstance != null) {
                     val executionId = processInstance.id
 
-                    runtimeService.messageEventReceived("EventUp", executionId)
+                    runtimeService.messageEventReceived("Message_12m3bgj", executionId)
 
                     return "OK"
                 } else {
