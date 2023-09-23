@@ -19,7 +19,6 @@ import java.time.LocalDateTime
 class ProcessController(
         private val runtimeService: RuntimeService,
         private val applicationRepository: ApplicationRepository,
-        private val kinopoiskFeignClient: KinopoiskFeignClient
 ) {
     @PostMapping("/start-process")
     fun startCamundaProcess(@RequestParam("keyword") keyword: String): String {
@@ -51,8 +50,8 @@ class ProcessController(
             throw ex
         }
     }
-    
-    @PostMapping("/request-precise-title")
+
+/*    @PostMapping("/request-precise-title")
     fun requestPreciseTitle(@RequestParam("clarification") clarification: String): FilmSearchResponse? {
         try {
             val application = applicationRepository.findByKeyword(clarification)
@@ -66,6 +65,45 @@ class ProcessController(
                 )
             } else {
                 throw IllegalArgumentException("Application with clarification $clarification not found")
+            }
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }*/
+
+    @PostMapping("/update-keyword")
+    fun updateKeywordAndContinue(
+            @RequestParam("applicationId") applicationId: Long,
+            @RequestParam("newKeyword") newKeyword: String
+    ): String {
+        try {
+            val application = applicationRepository.findById(applicationId)
+
+            if (application.isPresent) {
+                val keyword = application.get().keyword
+
+                val existingApplication = application.get()
+                existingApplication.keyword = newKeyword
+//                val updatedApplication = existingApplication.copy(keyword = newKeyword)
+
+                applicationRepository.save(existingApplication)
+
+                // Находим процесс по businessKey
+                val processInstance = runtimeService.createProcessInstanceQuery()
+                        .processInstanceBusinessKey(applicationId.toString())
+                        .singleResult()
+
+                if (processInstance != null) {
+                    val executionId = processInstance.id
+
+                    runtimeService.messageEventReceived("EventUp", executionId)
+
+                    return "OK"
+                } else {
+                    throw IllegalArgumentException("Process not found for application with ID $applicationId")
+                }
+            } else {
+                throw IllegalArgumentException("Application with ID $applicationId not found")
             }
         } catch (ex: Exception) {
             throw ex

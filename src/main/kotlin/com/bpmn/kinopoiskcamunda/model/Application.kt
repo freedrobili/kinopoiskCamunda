@@ -24,9 +24,9 @@ data class Application(
         @Column(name = "update_date")
         val updateDate: LocalDateTime,
 
-        val keyword: String,
+        var keyword: String,
 
-        @ManyToOne
+        @OneToOne
         @JoinColumn(name = "film_id")
         val film: Film? = null
 )
