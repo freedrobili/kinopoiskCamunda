@@ -72,7 +72,7 @@ class ProcessController(
     }*/
 
     @PostMapping("/update-keyword")
-    fun updateKeywordAndContinue(
+    /*fun updateKeywordAndContinue(
             @RequestParam("applicationId") applicationId: Long,
             @RequestParam("newKeyword") newKeyword: String
     ): String {
@@ -93,12 +93,33 @@ class ProcessController(
                         .processInstanceBusinessKey(applicationId.toString())
                         .singleResult()
 
+
                 if (processInstance != null) {
                     val executionId = processInstance.id
 
-                    runtimeService.messageEventReceived("Message_12m3bgj", executionId)
+                    val pi = runtimeService.startProcessInstanceByKey("")
+                    val eventName = "MessageName"
 
-                    return "OK"
+                    val subscription = runtimeService.createEventSubscriptionQuery()
+                            .processInstanceId(pi.id)
+                            .eventType("message")
+                            .singleResult()
+
+//                    val eventName = "Уточнить название"
+//                    val eventSubscription = runtimeService.createEventSubscriptionQuery()
+//                            .executionId(executionId)
+//                            .processInstanceId(executionId)
+//                            .eventName(eventName)
+//                            .singleResult()
+
+//                    if (eventSubscription != null) {
+                    if (subscription != null) {
+                        runtimeService.messageEventReceived(eventName, executionId)
+                        return "OK"
+                    } else{
+                        throw IllegalArgumentException("Event subscription nor found for executionId $executionId and eventName $eventName")
+                    }
+
                 } else {
                     throw IllegalArgumentException("Process not found for application with ID $applicationId")
                 }
@@ -108,5 +129,49 @@ class ProcessController(
         } catch (ex: Exception) {
             throw ex
         }
+    }*/
+    fun updateKeywordAndContinue(
+            @RequestParam("applicationId") applicationId: Long,
+            @RequestParam("newKeyword") newKeyword: String
+    ): String {
+        try {
+            val application = applicationRepository.findById(applicationId)
+
+            if (application.isPresent) {
+
+                val existingApplication = application.get()
+                existingApplication.keyword = newKeyword
+
+                applicationRepository.save(existingApplication)
+
+                val eventName = "MessageName"
+                val processInstance = runtimeService.createProcessInstanceQuery()
+                        .processInstanceBusinessKey(applicationId.toString())
+                        .singleResult()
+
+                if (processInstance != null) {
+                    val executionId = processInstance.id
+
+                    val eventSubscription = runtimeService.createEventSubscriptionQuery()
+                            .processInstanceId(executionId)
+                            .eventName(eventName)
+                            .singleResult()
+
+                    if (eventSubscription != null) {
+                        runtimeService.messageEventReceived(eventSubscription.eventName, eventSubscription.executionId)
+                        return "OK"
+                    } else {
+                        throw IllegalArgumentException("Event subscription not found for executionId $executionId and eventName $eventName")
+                    }
+                } else {
+                    throw IllegalArgumentException("Failed to start the process for application with ID $applicationId")
+                }
+            } else {
+                throw IllegalArgumentException("Application with ID $applicationId not found")
+            }
+        } catch (ex: Exception) {
+            throw ex
+        }
     }
+
 }

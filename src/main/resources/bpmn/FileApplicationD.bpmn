@@ -7,11 +7,6 @@
     <bpmn:startEvent id="StartEvent_1" camunda:initiator="template">
       <bpmn:outgoing>Flow_0kr5lzt</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:intermediateCatchEvent id="Event_1bvbjgd" name="Уточнить название">
-      <bpmn:incoming>Flow_0lekq9e</bpmn:incoming>
-      <bpmn:outgoing>Flow_0h7veqw</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0oe3yph" messageRef="Message_01dpwhz" />
-    </bpmn:intermediateCatchEvent>
     <bpmn:exclusiveGateway id="Gateway_03get25" name="filmId != null" default="Flow_0z5tj4k">
       <bpmn:incoming>Flow_15g74rg</bpmn:incoming>
       <bpmn:outgoing>Flow_0z5tj4k</bpmn:outgoing>
@@ -42,8 +37,13 @@
       <bpmn:incoming>Flow_0z5tj4k</bpmn:incoming>
       <bpmn:outgoing>Flow_0qtmtyq</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:intermediateCatchEvent id="Event_1bvbjgd" name="Уточнить название" camunda:asyncBefore="true">
+      <bpmn:incoming>Flow_0lekq9e</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h7veqw</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0oe3yph" messageRef="Message_01dpwhz" />
+    </bpmn:intermediateCatchEvent>
   </bpmn:process>
-  <bpmn:message id="Message_01dpwhz" name="Message_12m3bgj" />
+  <bpmn:message id="Message_01dpwhz" name="MessageName" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_12c3eum">
       <bpmndi:BPMNShape id="Participant_0qx44eh_di" bpmnElement="Participant_0qx44eh" isHorizontal="true">
@@ -87,12 +87,6 @@
           <dc:Bounds x="193" y="292" width="8" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_17a4zb7_di" bpmnElement="Event_1bvbjgd">
-        <dc:Bounds x="382" y="142" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="376" y="185" width="48" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_03get25_di" bpmnElement="Gateway_03get25" isMarkerVisible="true">
         <dc:Bounds x="475" y="242" width="50" height="50" />
         <bpmndi:BPMNLabel>
@@ -107,6 +101,12 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0r36o7u_di" bpmnElement="Activity_0fo0iyr">
         <dc:Bounds x="620" y="227" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_17a4zb7_di" bpmnElement="Event_1bvbjgd">
+        <dc:Bounds x="382" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="376" y="185" width="48" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
