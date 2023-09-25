@@ -5,7 +5,6 @@ import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
 import javax.persistence.*
 
-
 @Entity
 @Table(name = "application")
 data class Application(

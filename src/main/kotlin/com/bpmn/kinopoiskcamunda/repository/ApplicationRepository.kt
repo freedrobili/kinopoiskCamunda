@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface ApplicationRepository : JpaRepository<Application, Long>{
-    fun findByKeyword(keyword: String): Application?
 }
