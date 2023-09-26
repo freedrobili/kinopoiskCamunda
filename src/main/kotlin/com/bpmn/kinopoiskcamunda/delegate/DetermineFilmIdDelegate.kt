@@ -12,10 +12,6 @@ class DetermineFilmIdDelegate(private val filmEnrichmentService: FilmEnrichmentS
         val keyword = execution.getVariable("keyword") as String
 
         val filmId = filmEnrichmentService.enrichFilmData(keyword)
-        if(filmId != null){
-            execution.setVariable("filmId", filmId)
-        } else {
-            execution.setVariable("filmId", null)
-        }
+        execution.setVariable("filmId", filmId)
     }
 }

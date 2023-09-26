@@ -9,16 +9,12 @@ import org.springframework.stereotype.Component
 class SaveToDatabaseDelegate(private val applicationRepository: ApplicationRepository) : JavaDelegate {
 
     override fun execute(execution: DelegateExecution) {
-        try {
-            val applicationId = execution.businessKey.toLong()
-                val application = applicationRepository.findById(applicationId)
-                if (application.isPresent) {
-                    val keyword = application.get().keyword
-                } else {
-                    throw IllegalArgumentException("Application not found with id: $applicationId")
-                }
-        } catch (ex: Exception) {
-            throw ex
+        val applicationId = execution.businessKey.toLong()
+        val application = applicationRepository.findById(applicationId)
+        if (application.isPresent) {
+            val keyword = application.get().keyword
+        } else {
+            throw IllegalArgumentException("Application not found with id: $applicationId")
         }
     }
 }
