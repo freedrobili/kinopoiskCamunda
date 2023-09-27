@@ -1,5 +1,6 @@
 package com.bpmn.kinopoiskcamunda.controller
 
+import com.bpmn.kinopoiskcamunda.dto.response.ApiResponse
 import com.bpmn.kinopoiskcamunda.dto.response.FilmSearchFilmDto
 import com.bpmn.kinopoiskcamunda.service.ApplicationService
 import com.bpmn.kinopoiskcamunda.service.ApplicationUpdateService
@@ -16,8 +17,9 @@ class ProcessController(
         private val applicationUpdateService: ApplicationUpdateService
 ) {
     @PostMapping("/start-process")
-    fun startCamundaProcess(@RequestParam("keyword") keyword: String): Long? {
-        return applicationService.startCamundaProcess(keyword)
+    fun startCamundaProcess(@RequestParam("keyword") keyword: String): ApiResponse {
+        val businessKey = applicationService.startCamundaProcess(keyword)
+        return ApiResponse(businessKey?.toString() ?: "", 0)
     }
 
     @PostMapping("/update-keyword")
@@ -25,7 +27,8 @@ class ProcessController(
             @RequestParam("applicationId") applicationId: Long,
             @RequestParam("newKeyword") newKeyword: String,
             @Value("\${ev_name}") eventName: String
-    ) : FilmSearchFilmDto?{
-        return applicationUpdateService.updateKeywordAndContinue(applicationId, newKeyword, eventName)
+    ) : ApiResponse{
+        applicationUpdateService.updateKeywordAndContinue(applicationId, newKeyword, eventName)
+        return ApiResponse()
     }
 }

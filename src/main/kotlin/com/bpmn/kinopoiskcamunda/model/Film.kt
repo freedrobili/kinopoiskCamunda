@@ -6,14 +6,11 @@ import javax.persistence.*
 @Table(name = "film")
 data class Film(
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long? = null,
+        @JoinColumn(name = "film_id")
+        val filmId: Int? = null,
 
         @Column(nullable = false)
         val title: String,
-
-        @Column(nullable = false)
-        val director: String,
 
         @Column(nullable = false)
         val releaseYear: Int,

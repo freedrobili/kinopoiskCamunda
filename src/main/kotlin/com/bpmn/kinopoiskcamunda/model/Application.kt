@@ -27,5 +27,5 @@ data class Application(
 
         @OneToOne
         @JoinColumn(name = "film_id")
-        val film: Film? = null
+        var film: Film? = null
 )
