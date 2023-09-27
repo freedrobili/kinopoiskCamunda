@@ -3,7 +3,7 @@ package com.bpmn.kinopoiskcamunda.model
 import javax.persistence.*
 
 @Entity
-@Table(name = "film")
+@Table(name = "film", schema = "kinopoisk")
 data class Film(
         @Id
         @JoinColumn(name = "film_id")

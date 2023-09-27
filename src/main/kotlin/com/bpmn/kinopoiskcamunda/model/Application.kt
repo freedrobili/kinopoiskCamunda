@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "application")
+@Table(name = "application", schema = "kinopoisk")
 data class Application(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
