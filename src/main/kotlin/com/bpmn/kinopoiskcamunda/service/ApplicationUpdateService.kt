@@ -1,6 +1,7 @@
 package com.bpmn.kinopoiskcamunda.service
 
 import com.bpmn.kinopoiskcamunda.dto.response.FilmSearchFilmDto
+import com.bpmn.kinopoiskcamunda.exception.ApplicationNotFoundException
 import com.bpmn.kinopoiskcamunda.repository.ApplicationRepository
 import org.camunda.bpm.engine.RuntimeService
 import org.springframework.beans.factory.annotation.Value
@@ -21,8 +22,9 @@ class ApplicationUpdateService(
     ): FilmSearchFilmDto? {
 
         val application = applicationRepository.findByIdOrNull(applicationId)
+                ?: throw ApplicationNotFoundException("Application not found with ID: $applicationId")
 
-        application?.let {
+        application.let {
 
             application.keyword = newKeyword
             applicationRepository.save(application)
