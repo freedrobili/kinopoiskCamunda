@@ -31,6 +31,7 @@ class ApplicationUpdateService(
 
             val processInstance = runtimeService.createProcessInstanceQuery()
                     .processInstanceBusinessKey(applicationId.toString())
+                    .active()
                     .singleResult()
 
             processInstance?.let {

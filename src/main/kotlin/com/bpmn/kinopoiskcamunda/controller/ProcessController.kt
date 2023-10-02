@@ -4,6 +4,7 @@ import com.bpmn.kinopoiskcamunda.dto.response.ApiResponse
 import com.bpmn.kinopoiskcamunda.dto.response.FilmSearchFilmDto
 import com.bpmn.kinopoiskcamunda.service.ApplicationService
 import com.bpmn.kinopoiskcamunda.service.ApplicationUpdateService
+import io.swagger.v3.oas.annotations.Operation
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,12 +17,14 @@ class ProcessController(
         private val applicationService: ApplicationService,
         private val applicationUpdateService: ApplicationUpdateService
 ) {
+    @Operation(summary = "Start a Camunda process")
     @PostMapping("/start-process")
     fun startCamundaProcess(@RequestParam("keyword") keyword: String): ApiResponse {
         val businessKey = applicationService.startCamundaProcess(keyword)
         return ApiResponse(businessKey?.toString() ?: "", 0)
     }
 
+    @Operation(summary = "Update keyword and continue")
     @PostMapping("/update-keyword")
     fun updateKeywordAndContinue(
             @RequestParam("applicationId") applicationId: Long,
