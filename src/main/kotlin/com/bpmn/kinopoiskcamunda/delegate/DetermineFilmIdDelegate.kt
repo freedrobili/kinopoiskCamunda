@@ -1,7 +1,5 @@
 package com.bpmn.kinopoiskcamunda.delegate
 
-import com.bpmn.kinopoiskcamunda.model.Film
-import com.bpmn.kinopoiskcamunda.repository.ApplicationRepository
 import com.bpmn.kinopoiskcamunda.service.FilmEnrichmentService
 import org.camunda.bpm.engine.delegate.DelegateExecution
 import org.camunda.bpm.engine.delegate.JavaDelegate

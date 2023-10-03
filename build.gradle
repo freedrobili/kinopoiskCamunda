@@ -63,20 +63,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin
     implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.14.2'
 
-    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
-    //implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:1.6.4'
-
-
     // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
     implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
-
-
-    // https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
-//    implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
-
-
-    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign
-//    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '4.0.1'
 
 
     dependencyManagement {

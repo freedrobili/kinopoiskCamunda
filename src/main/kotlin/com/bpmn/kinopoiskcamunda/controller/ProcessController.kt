@@ -1,7 +1,6 @@
 package com.bpmn.kinopoiskcamunda.controller
 
 import com.bpmn.kinopoiskcamunda.dto.response.ApiResponse
-import com.bpmn.kinopoiskcamunda.dto.response.FilmSearchFilmDto
 import com.bpmn.kinopoiskcamunda.service.ApplicationService
 import com.bpmn.kinopoiskcamunda.service.ApplicationUpdateService
 import io.swagger.v3.oas.annotations.Operation
