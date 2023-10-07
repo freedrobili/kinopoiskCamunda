@@ -1,0 +1,54 @@
+logging:
+  level:
+    org.springframework.web: DEBUG
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/postgres?currentSchema=camunda
+    username: postgres
+    password: postgres
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  liquibase:
+    url: jdbc:postgresql://localhost:5432/postgres
+    user: postgres
+    password: postgres
+    change-log: classpath:/liquibase/changelog.yml
+    default-schema: camunda
+
+
+camunda:
+  bpm:
+    admin-user:
+      id: demo
+      password: demo
+    webapp:
+      index-redirect-enabled: true
+    database:
+      type: postgres
+      schema-update: false
+      table-prefix: camunda.
+      schema-name: camunda
+    filter:
+      create: all
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 5000
+        logger-level: basic
+
+ev_name: MessageName
+
+X-API-KEY: 6f050821-baae-4c2f-968a-65071e17fb8e
+
+kinopoisk:
+  api:
+    url: https://kinopoiskapiunofficial.tech/api

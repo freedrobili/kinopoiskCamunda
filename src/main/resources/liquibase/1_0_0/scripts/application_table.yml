@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - logicalFilePath: src/main/resources/liquibase/1_0_0/scripts/application_table
+  - changeSet:
+      id: 1.0.1_0
+      author: ykudashkina
+      changes:
+        - createTable:
+            schemaName: camunda
+            tableName: application
+            remarks: Таблица c заявками
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+              - column:
+                  constraints:
+                    nullable: false
+                  name: status
+                  type: varchar(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: creation_date
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: update_date
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: keyword
+                  type: varchar(255)
+              - column:
+                  constraints:
+                    nullable: true
+                  name: film_id
+                  type: bigint
+            foreignKeys:
+              - foreignKey:
+                  baseTableName: application
+                  baseColumnNames: film_id
+                  referencedTableName: film
+                  referencedColumnNames: id
