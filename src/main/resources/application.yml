@@ -45,6 +45,28 @@ feign:
         read-timeout: 5000
         logger-level: basic
 
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus, info, metric
+
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+        step: PT1M
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+
+  endpoint:
+    shutdown:
+      enabled: true
+    info:
+      enabled: true
+
 ev_name: MessageName
 
 X-API-KEY: 6f050821-baae-4c2f-968a-65071e17fb8e

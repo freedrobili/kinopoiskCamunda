@@ -29,13 +29,14 @@ class ApplicationUpdateService(
             application.keyword = newKeyword
             applicationRepository.save(application)
 
+
             val processInstance = runtimeService.createProcessInstanceQuery()
                     .processInstanceBusinessKey(applicationId.toString())
                     .active()
-                    .singleResult()
+                    .list()
 
             processInstance?.let {
-                val executionId = processInstance.id
+                val executionId = processInstance[0].id
 
                 val eventSubscription = runtimeService.createEventSubscriptionQuery()
                         .processInstanceId(executionId)
@@ -44,11 +45,13 @@ class ApplicationUpdateService(
 
                 eventSubscription?.let {
                     val processVariable = mapOf("keyword" to newKeyword)
-                    runtimeService.messageEventReceived(eventSubscription.eventName, eventSubscription.executionId, processVariable)
+                    runtimeService.messageEventReceived(
+                        eventSubscription.eventName,
+                        eventSubscription.executionId,
+                        processVariable
+                    )
 
-                    val filmInfo = filmEnrichmentService.enrichFilmDto(newKeyword)
-
-                    return filmInfo
+                    return filmEnrichmentService.enrichFilmDto(newKeyword)
                 }
             }
         }

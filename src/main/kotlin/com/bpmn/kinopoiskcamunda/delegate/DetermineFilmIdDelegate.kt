@@ -1,5 +1,6 @@
 package com.bpmn.kinopoiskcamunda.delegate
 
+import com.bpmn.kinopoiskcamunda.annotations.MetricTiming
 import com.bpmn.kinopoiskcamunda.service.FilmEnrichmentService
 import org.camunda.bpm.engine.delegate.DelegateExecution
 import org.camunda.bpm.engine.delegate.JavaDelegate
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component
 @Component("filmDelegate")
 class DetermineFilmIdDelegate(private val filmEnrichmentService: FilmEnrichmentService) : JavaDelegate{
 
+    @MetricTiming("film_delegate_execution_timer")
     override fun execute(execution: DelegateExecution) {
         val keyword = execution.getVariable("keyword") as String
 
