@@ -23,7 +23,6 @@ class FilmEnrichmentService(private val kinopoiskFeignClient: KinopoiskFeignClie
     fun enrichFilmDto(keyword: String): FilmSearchFilmDto? {
         val filmSearchResponse = kinopoiskFeignClient.searchFilm(keyword)
         val films = filmSearchResponse.films
-
         if (!films.isNullOrEmpty()) {
             val filmInfo = films[0]
             return FilmSearchFilmDto(

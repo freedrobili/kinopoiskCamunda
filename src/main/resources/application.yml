@@ -2,25 +2,83 @@ logging:
   level:
     org.springframework.web: DEBUG
 
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://localhost/postgres?currentSchema=camunda
+#    username: postgres
+#    password: postgres
+#  jpa:
+#    generate-ddl: true
+#    properties:
+#      hibernate:
+#        jdbc:
+#          lob:
+#            non_contextual_creation: true
+#  liquibase:
+#    url: jdbc:postgresql://localhost:5432/postgres
+#    user: postgres
+#    password: postgres
+#    change-log: classpath:/liquibase/changelog.yml
+#    default-schema: camunda
+
 spring:
   datasource:
-    url: jdbc:postgresql://localhost/postgres?currentSchema=camunda
-    username: postgres
-    password: postgres
+    url: jdbc:h2:mem:default;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS CAMUNDA\;SET SCHEMA CAMUNDA
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
   jpa:
-    generate-ddl: true
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
-  liquibase:
-    url: jdbc:postgresql://localhost:5432/postgres
-    user: postgres
-    password: postgres
-    change-log: classpath:/liquibase/changelog.yml
-    default-schema: camunda
+    hibernate:
+      ddl-auto: update
 
+#    url: jdbc:h2:tcp://localhost:9092/default
+#    url: jdbc:h2:mem:default
+
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password: password
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+    #    generate-ddl: true
+#    hibernate:
+#      ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect
+#  liquibase:
+#    url: jdbc:h2:mem:testdb
+#    user: sa
+#    password: password
+#    change-log: classpath:/liquibase/changelog.yml
+#    default-schema: camunda
+
+#spring:
+#  datasource:
+#    url: jdbc:h2:mem:mydb
+#    username: sa
+#    password: password
+#    driverClassName: org.h2.Driver
+#  jpa:
+#    database-platform: org.hibernate.dialect.H2Dialect
+
+  kafka:
+    bootstrap-servers: localhost:29092
+    consumer:
+      group-id: "message-1"
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        spring:
+#          deserializer:
+#            value:
+#              delegate:
+#                class: org.springframework.kafka.support.serializer.String
+          json:
+            trusted:
+              packages: '*'
+
+topic:
+  send-message: quickstart
 
 camunda:
   bpm:
@@ -31,7 +89,8 @@ camunda:
       index-redirect-enabled: true
     database:
       type: postgres
-      schema-update: false
+#      schema-update: false
+      schema-update: true
       table-prefix: camunda.
       schema-name: camunda
     filter:
@@ -45,13 +104,11 @@ feign:
         read-timeout: 5000
         logger-level: basic
 
-
 management:
   endpoints:
     web:
       exposure:
         include: health, prometheus, info, metric
-
   metrics:
     export:
       prometheus:
@@ -60,7 +117,6 @@ management:
     distribution:
       percentiles-histogram:
         "[http.server.requests]": true
-
   endpoint:
     shutdown:
       enabled: true

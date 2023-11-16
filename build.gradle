@@ -6,7 +6,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.6.21'
     id 'org.jetbrains.kotlin.plugin.spring' version '1.6.21'
     id 'org.jetbrains.kotlin.plugin.jpa' version '1.6.21'
-    id "org.liquibase.gradle" version "2.2.0"
+//    id "org.liquibase.gradle" version "2.2.0"
 }
 
 group = 'com.bpmn'
@@ -19,7 +19,8 @@ java {
 repositories {
     mavenCentral()
 }
-
+sourceCompatibility = '17'
+targetCompatibility = '17'
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
@@ -58,7 +59,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.camunda.bpm/camunda-engine-plugin-spin
     implementation group: 'org.camunda.bpm', name: 'camunda-engine-plugin-spin', version: '7.18.0'
 
-    implementation 'org.liquibase:liquibase-core'
+//    implementation 'org.liquibase:liquibase-core'
 
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin
     implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-kotlin', version: '2.14.2'
@@ -76,6 +77,18 @@ dependencies {
     // https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus
     implementation 'io.micrometer:micrometer-registry-prometheus:1.10.5'
     implementation 'io.micrometer:micrometer-core:1.10.5'
+
+    implementation 'org.springframework.kafka:spring-kafka'
+//    // https://mvnrepository.com/artifact/org.apache.kafka/kafka
+//    implementation 'org.apache.kafka:kafka_2.10:0.8.0'
+
+// https://mvnrepository.com/artifact/com.h2database/h2
+    testImplementation 'com.h2database:h2:2.1.214'
+
+
+    implementation 'com.h2database:h2'
+
+    runtimeOnly 'com.h2database:h2'
 
     dependencyManagement {
         imports {
@@ -95,4 +108,14 @@ tasks.withType(KotlinCompile) {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+
+bootJar {
+    duplicatesStrategy = 'exclude' // Исключаем дубликаты
+}
+jar {
+    manifest {
+        attributes["Main-Class"] = "com.bpmn.kinopoiskcamunda.KinopoiskCamundaApplicationKt"
+    }
 }

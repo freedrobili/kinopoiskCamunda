@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kinopoisk-app-ingress
+spec:
+  rules:
+    - host: kinopoisk.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kinopoisk-app-service
+                port:
+                  number: 80

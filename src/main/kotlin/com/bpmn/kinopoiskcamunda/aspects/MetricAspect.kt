@@ -25,7 +25,7 @@ class MetricAspect(private val meterRegistry: MeterRegistry) {
         val endTime = System.nanoTime()
         val duration = Duration.ofNanos(endTime-startTime)
         timer.record(duration)
-
+        joinPoint.proceed()
         return null
     }
 }
