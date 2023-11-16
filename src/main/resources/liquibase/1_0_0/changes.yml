@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: "scripts/film_table.yml"
+      relativeToChangelogFile: true
+  - include:
+      file: "scripts/application_table.yml"
+      relativeToChangelogFile: true

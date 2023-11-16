@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-kinopoiskcamunda
+spec:
+  replicas: 3
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: pod-kinopoiskcamunda
+  template:
+    metadata:
+      labels:
+        app: pod-kinopoiskcamunda
+    spec:
+      containers:
+        - name: pod-kinopoiskcamunda
+          image: freedrobili/kuber:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080

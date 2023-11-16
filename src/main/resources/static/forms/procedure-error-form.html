@@ -1,0 +1,49 @@
+<form role="form" name="form">
+    <script cam-script type="text/form-script">
+    camForm.on('form-loaded', function() {
+      camForm.variableManager.fetchVariable('error');
+      camForm.variableManager.fetchVariable('procedureId');
+      camForm.variableManager.fetchVariable('procName');
+    });
+    camForm.on('variables-restored', function() {
+      $scope.procedureId = camForm.variableManager.variableValue('procedureId');
+      $scope.error = camForm.variableManager.variableValue('error');
+      $scope.procName = camForm.variableManager.variableValue('procName');
+    });
+    camForm.on('submit', function() {
+          angular.forEach($scope.error.result, function(message) {
+            delete message.$$hashKey;
+          });
+      });
+
+
+    </script>
+
+    <h2>Параметры процедуры TOM</h2>
+
+    <table>
+
+        <tr>
+            <td>ID процедуры:</td>
+            <td>{{ procedureId }}</td>
+        </tr>
+
+        <tr>
+            <td>Наименование процедуры:</td>
+            <td>{{ procName }}</td>
+        </tr>
+
+    </table>
+    <h2>
+        Список ошибок от SMA
+    </h2>
+    <div ng-repeat="message in error.result">
+        <h3>{{message}}</h3>
+    </div>
+
+
+    <h2>Выполнить процедуры ещё раз?</h2>
+    <div class="form-group">
+        <input type="checkbox" cam-variable-name="executeProcedure" cam-variable-type="Boolean">
+    </div>
+</form>

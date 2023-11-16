@@ -1,0 +1,105 @@
+<form role="form" name="form">
+    <script cam-script type="text/form-script">
+    camForm.on('form-loaded', function() {
+      camForm.variableManager.fetchVariable('formRiskOpportunityId');
+      camForm.variableManager.fetchVariable('formRiskCompanyShortName');
+      camForm.variableManager.fetchVariable('formRiskCompanyINN');
+      camForm.variableManager.fetchVariable('formRiskCompanyKPP');
+      camForm.variableManager.fetchVariable('formRiskCompanyOrgrn');
+      camForm.variableManager.fetchVariable('formRiskCompanySiebelId');
+      camForm.variableManager.fetchVariable('formRiskCompanyMerchantsJson');
+      camForm.variableManager.fetchVariable('isNSPKIncidents');
+      camForm.variableManager.fetchVariable('kindOfActivity');
+    });
+    camForm.on('variables-restored', function() {
+      $scope.formRiskOpportunityId = camForm.variableManager.variableValue('formRiskOpportunityId');
+      $scope.formRiskCompanyShortName = camForm.variableManager.variableValue('formRiskCompanyShortName');
+      $scope.formRiskCompanyINN = camForm.variableManager.variableValue('formRiskCompanyINN');
+      $scope.formRiskCompanyKPP = camForm.variableManager.variableValue('formRiskCompanyKPP');
+      $scope.formRiskCompanyOrgrn = camForm.variableManager.variableValue('formRiskCompanyOrgrn');
+      $scope.formRiskCompanySiebelId = camForm.variableManager.variableValue('formRiskCompanySiebelId');
+      $scope.formRiskCompanyMerchantsJson = camForm.variableManager.variableValue('formRiskCompanyMerchantsJson');
+      $scope.isNSPKIncidents = camForm.variableManager.variableValue('isNSPKIncidents');
+      $scope.kindOfActivity = camForm.variableManager.variableValue('kindOfActivity');
+    });
+    camForm.on('submit', function() {
+          angular.forEach($scope.formRiskCompanyMerchantsJson.merchants, function(merchant) {
+            angular.forEach(merchant.terminals, function(terminal) {
+                delete terminal.$$hashKey;
+            });
+            delete merchant.$$hashKey;
+          });
+      });
+
+
+
+
+
+    </script>
+
+    <h2>Параметры заявки TOM</h2>
+
+    <table>
+
+        <tr>
+            <td>ID заявки:</td>
+            <td>{{ formRiskOpportunityId }}</td>
+        </tr>
+
+        <tr>
+            <td>Краткое наименование компании:</td>
+            <td>{{ formRiskCompanyShortName }}</td>
+        </tr>
+
+        <tr>
+            <td>ИНН Компании:</td>
+            <td>{{ formRiskCompanyINN }}</td>
+        </tr>
+
+        <tr>
+            <td>КПП Компании:</td>
+            <td>{{ formRiskCompanyKPP }}</td>
+        </tr>
+
+        <tr>
+            <td>ОГРН Компании:</td>
+            <td>{{ formRiskCompanyOrgrn }}</td>
+        </tr>
+
+        <tr>
+            <td>Основной ОКВЭД:</td>
+            <td>{{ kindOfActivity }}</td>
+        </tr>
+
+        <tr>
+            <td>SiebelID Компании:</td>
+            <td>{{ formRiskCompanySiebelId }}</td>
+        </tr>
+
+        <tr>
+            <td>Инциденты НСПК?:</td>
+            <td>{{ (isNSPKIncidents) ? "Да" : "Нет" }}</td>
+        </tr>
+
+    </table>
+    <h2>
+        Список мерчантов и теминалов
+    </h2>
+    <div ng-repeat="merchant in formRiskCompanyMerchantsJson.merchants">
+        <h3>Мерчант: название - {{merchant.nameEng}}, ShopID - {{merchant.extShopId}}, тип помещения - {{merchant.buildType}}</h3>
+        <div>
+            <div ng-repeat="terminal in merchant.terminals">
+                <div>
+                    <strong>Терминал: тип - {{terminal.type}}, серийный номер - {{terminal.serialNumber}}, mcc -
+                        {{terminal.mcc}}({{terminal.descriptionRus}})</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <h2>Согласование</h2>
+    <div class="form-group">
+        <input type="checkbox" cam-variable-name="formRiskApprove" cam-variable-type="Boolean">
+    </div>
+</form>
